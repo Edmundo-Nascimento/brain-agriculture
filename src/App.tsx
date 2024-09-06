@@ -4,6 +4,7 @@ import DashboardFeature from "./features/dashboard/dashboard.feature";
 import { ModalProvider } from "./context/modal-context";
 import Modal from "./common/components/modal/modal";
 import FarmListFeature from "./features/farm/farm-list.feature";
+import Error404 from "./pages/404";
 
 
 const router = createBrowserRouter([
@@ -14,11 +15,17 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <DashboardFeature />,
+        errorElement: <Error404 />,
       },
       {
         path: "/fazendas",
         element: <FarmListFeature />,
-      }
+        errorElement: <Error404 />,
+      },
+      {
+        path: "*",
+        element: <Error404 />,
+      },
     ],
   },
 ]);
