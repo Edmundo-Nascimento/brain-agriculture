@@ -6,7 +6,9 @@ import { IFarm } from '../../../common/data/farms';
 import LOCATION_ICON from "../../../assets/location.svg"
 
 import 'leaflet/dist/leaflet.css';
+
 import L from 'leaflet';
+
 export const FarmMap = ({ farms }: { farms: IFarm[] }) => {
   const mapRef = useRef(null);
 

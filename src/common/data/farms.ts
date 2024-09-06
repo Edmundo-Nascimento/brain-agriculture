@@ -6,10 +6,10 @@ export interface IFarm {
   farmName: string;
   city: string;
   state: IState;
-  generalCoordinates: number[];
-  totalAreaCoordinates: number[][];
-  farmableCoordinatesArea: number[][];
-  vegetationCoordinates: number[][];
+  generalCoordinates: any;
+  totalAreaCoordinates: any;
+  farmableCoordinatesArea: any;
+  vegetationCoordinates: any;
   plantedCrops: ICultura[];
   totalArea: string;
   agriculturalArea: string;
