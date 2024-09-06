@@ -42,6 +42,8 @@ export const addFarm = createAsyncThunk('farms/addFarm', async (newFarm: Partial
 });
 
 export const updateFarm = createAsyncThunk('farms/updateFarm', async ({ id, payload }: { id: number, payload: Partial<IFarm> }) => {
+  console.log(id)
+  console.log(payload)
   const response = await apiUpdateFarm(id, payload);
   return response;
 });

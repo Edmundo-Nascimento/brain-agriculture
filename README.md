@@ -1,5 +1,26 @@
 # Brain Agriculture
 
+# Documentação do Projeto 
+
+#### Tabela de Bibliotecas Aqui está uma tabela com as bibliotecas utilizadas no projeto e suas versões: 
+| Nome da Biblioteca | Versão | 
+|--------------------|------------| 
+| React | ^18.2.0 | 
+| Vite | ^4.0.0 | 
+| React Router DOM | ^6.8.0 | 
+| Tailwind CSS | ^3.0.0 | 
+| Formik | ^2.2.9 | 
+| Zod | ^3.0.0 |
+
+
+## Checklist de Configurações Verifique se as seguintes configurações foram feitas: 
+
+- [x] **Node.js está instalado** 
+- [x] **Vite está configurado no `package.json`** 
+- [ ] **Variáveis de ambiente estão configuradas corretamente** 
+- [ ]  **Configuração do Tailwind CSS está completa** 
+- [x] **Testes iniciais foram executados e passaram**
+
 
 ## 🚀 Tech
 

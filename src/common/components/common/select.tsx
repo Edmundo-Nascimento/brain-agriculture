@@ -88,12 +88,11 @@ const formatGroupLabel = (data: any) => (
 );
 
 
-export function SelectGroupCustomComponent({ options, label, id, errors, name, isMulti = false, ...props }: any) {
-  const [field, helpers]: any = useField(name);
+export function SelectGroupCustomComponent({ options, label, id, errors, name, isMulti = false, setFieldValue, ...props }: any) {
+  const [field]: any = useField(name);
 
   const handleChange = (option: any) => {
-    console.log('Selected option:', option); // Aqui você pode ver o valor selecionado
-    helpers.setValue(option)
+    setFieldValue(name, option)
   };
 
   return (
@@ -114,23 +113,24 @@ export function SelectGroupCustomComponent({ options, label, id, errors, name, i
   )
 }
 
-export default function SelectCustomComponent({ options, label, id, errors, name, ...props }: any) {
-  const [field, helpers]: any = useField(name);
+export default function SelectCustomComponent({ options, label, id, errors, name, setFieldValue, ...props }: any) {
+  const [field] = useField(name);
 
   const handleChange = (option: any) => {
-    console.log('Selected option:', option); // Aqui você pode ver o valor selecionado
-    helpers.setValue(option)
+    setFieldValue(name, option)
   };
 
   return (
     <div className="mb-4 w-full">
       <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
       <Select
+        name={name}
         options={options}
         styles={customStyles}
         className={`react-select-container`}
         onChange={handleChange}
         value={field.value}
+        placeholder=""
       />
       {errors[name] && <span className="text-red-500 text-sm mt-1">{errors[name]}</span>}
     </div>

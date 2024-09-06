@@ -110,11 +110,6 @@ interface FarmRegisterFeatureProps {
 export default function FarmRegisterFeature({ farm }: FarmRegisterFeatureProps) {
   const formikRef = useRef(null);
   const [step, setStep] = useState(1);
-  const [farmAreas, setFarmAreas] = useState({
-    totalArea: 0,
-    agriculturalArea: 0,
-    vegetationArea: 0,
-  });
 
   const { closeModal }: any = useModal();
 
@@ -131,38 +126,9 @@ export default function FarmRegisterFeature({ farm }: FarmRegisterFeatureProps) 
   });
 
   const StepTwoSchema = z.object({
-    totalArea: z.string({ message: "Campo obrigatório" })
-      .superRefine((data) => {
-        setFarmAreas(prev => ({ ...prev, totalArea: Number(data) }))
-      }),
-    agriculturalArea: z.string({ message: "Campo obrigatório" })
-      .superRefine((data, ctx) => {
-        console.log(farmAreas)
-        console.log("D ", data)
-        setFarmAreas(prev => ({ ...prev, agriculturalArea: Number(data) }))
-        if ((Number(data) + farmAreas.vegetationArea) > farmAreas.totalArea) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "O somatório da área agricultável e vegetação não pode ser maior que a área total.",
-            path: ['agriculturalArea', 'vegetationArea'], // Erro relacionado a essas duas áreas
-            fatal: true,
-          });
-          return z.NEVER;
-        }
-      }),
-    vegetationArea: z.string()
-      .superRefine((data, ctx) => {
-        setFarmAreas(prev => ({ ...prev, vegetationArea: Number(data) }))
-        if ((farmAreas.agriculturalArea + Number(data)) > farmAreas.totalArea) {
-          ctx.addIssue({
-            code: z.ZodIssueCode.custom,
-            message: "O somatório da área agricultável e vegetação não pode ser maior que a área total.",
-            path: ['agriculturalArea', 'vegetationArea'], // Erro relacionado a essas duas áreas
-            fatal: true,
-          });
-          return z.NEVER;
-        }
-      }),
+    totalArea: z.number({ message: "Campo obrigatório" }),
+    agriculturalArea: z.number({ message: "Campo obrigatório" }),
+    vegetationArea: z.number(),
     plantedCrops: z.array(
       z.object({
         id: z.number(),
@@ -207,7 +173,7 @@ export default function FarmRegisterFeature({ farm }: FarmRegisterFeatureProps) 
         }
       }}
     >
-      {({ errors, handleChange, values, isValid }) => (
+      {({ errors, handleChange, values, isValid, setFieldValue }) => (
         <div className="flex w-full h-screen overflow-hidden">
           <div className="px-8 w-full md:w-1/2 flex flex-col justify-center divide-y divide-dashed gap-y-6">
             <div className="">
@@ -224,7 +190,7 @@ export default function FarmRegisterFeature({ farm }: FarmRegisterFeatureProps) 
                         <InputMaskComponent onChange={handleChange} label="CPF/CNPJ" id="document" placeholder="Ex: 023.432.342-34" name="document" type="text" errors={errors} />
                       </div>
                       <div className="flex gap-4">
-                        <SelectCustomComponent options={brasilianStates} onChange={handleChange} label="Estado" id="state" name="state" type="text" errors={errors} className="w-full" />
+                        <SelectCustomComponent options={brasilianStates} setFieldValue={setFieldValue} onChange={handleChange} label="Estado" id="state" name="state" type="text" errors={errors} className="w-full" />
                         <Input onChange={handleChange} placeholder="Ex: Criciuma" label="Cidade" id="city" name="city" type="text" errors={errors} className="w-full" />
                       </div>
                       <div className="flex flex-row-reverse">
@@ -241,8 +207,7 @@ export default function FarmRegisterFeature({ farm }: FarmRegisterFeatureProps) 
                       <HectaresInput onChange={handleChange} label="Área total" id="totalArea" name="totalArea" type="number" step="0.01" min="0" errors={errors} />
                       <HectaresInput onChange={handleChange} label="Área agricultável" id="agriculturalArea" name="agriculturalArea" type="number" step="0.01" min="0" errors={errors} />
                       <HectaresInput onChange={handleChange} label="Área de vegetação" id="vegetationArea" name="vegetationArea" type="number" step="0.01" min="0" errors={errors} />
-                      <SelectGroupCustomComponent options={plantedCropsGroupedOptions} onChange={handleChange} isMulti={true} label="Culturas plantadas" id="plantedCrops" name="plantedCrops" errors={errors} />
-
+                      <SelectGroupCustomComponent setFieldValue={setFieldValue} options={plantedCropsGroupedOptions} onChange={handleChange} isMulti={true} label="Culturas plantadas" id="plantedCrops" name="plantedCrops" errors={errors} />
 
                       <div className="flex flex-row-reverse gap-2">
                         <button type="submit" className="w-1/4 bg-primary text-white py-2 px-4 rounded-md hover:bg-primary-dark focus:outline-none focus:ring-2 focus:bg-primary-dark focus:ring-opacity-50">
