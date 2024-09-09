@@ -100,6 +100,7 @@ export function SelectGroupCustomComponent({ options, label, id, errors, name, i
       <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
 
       <Select<any | any, false, any>
+        {...field}
         formatGroupLabel={formatGroupLabel}
         options={options}
         styles={customStyles}
@@ -108,7 +109,7 @@ export function SelectGroupCustomComponent({ options, label, id, errors, name, i
         value={field.value}
         isMulti={isMulti}
       />
-      {errors[name] && <span className="text-red-500 text-sm mt-1">{errors[name]}</span>}
+      {errors[name] && <span className="text-red-500 text-sm mt-1">{name === "plantedCrops" ? "Campo obrigatório" : errors[name]}</span>}
     </div>
   )
 }
@@ -120,10 +121,12 @@ export default function SelectCustomComponent({ options, label, id, errors, name
     setFieldValue(name, option)
   };
 
+
   return (
     <div className="mb-4 w-full">
       <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
       <Select
+        {...field}
         name={name}
         options={options}
         styles={customStyles}
@@ -132,7 +135,7 @@ export default function SelectCustomComponent({ options, label, id, errors, name
         value={field.value}
         placeholder=""
       />
-      {errors[name] && <span className="text-red-500 text-sm mt-1">{errors[name]}</span>}
+      {errors[name] && <span className="text-red-500 text-sm mt-1">{name === "state" ? "Campo obrigatório" : errors[name]}</span>}
     </div>
   )
 }

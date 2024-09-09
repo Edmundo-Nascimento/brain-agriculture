@@ -46,7 +46,7 @@ export default function Input({ label, errors, name, ...props }: InputProps) {
         {...props}
         className={`w-full px-3 py-2 border ${errors[name] ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
       />
-      {errors[name] && <span className="text-red-500 text-sm mt-1">{errors[name]}</span>}
+      {errors[name] && <span className="text-red-500 text-sm mt-1">{name === "plantedCrops" ? "Campo obrigatório" : errors[name]}</span>}
     </div>
   )
 }

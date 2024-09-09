@@ -84,6 +84,8 @@ export default function FarmRegisterFeature({ farm }: FarmRegisterFeatureProps) 
       id: z.number(),
       label: z.string(),
       value: z.string(),
+    }).refine((state) => state.id && state.label && state.value, {
+      message: "O campo obrigatório",
     }),
     city: z.string({ message: "Campo obrigatório" }),
   });
@@ -91,7 +93,7 @@ export default function FarmRegisterFeature({ farm }: FarmRegisterFeatureProps) 
   const StepTwoSchema = z.object({
     totalArea: z.number({ message: "Campo obrigatório" }),
     agriculturalArea: z.number({ message: "Campo obrigatório" }),
-    vegetationArea: z.number(),
+    vegetationArea: z.number({ message: "Campo obrigatório" }),
     plantedCrops: z.array(
       z.object({
         id: z.number(),
@@ -99,7 +101,7 @@ export default function FarmRegisterFeature({ farm }: FarmRegisterFeatureProps) 
         value: z.string(),
         type: z.string(),
       })
-    ),
+    ).min(1, { message: "É necessário selecionar pelo menos uma cultura plantada" }),
   }).refine((data) => {
     return !(data.totalArea < (data.agriculturalArea + data.vegetationArea))
   }, {

@@ -2,7 +2,9 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement } from 'chart.js';
 
 import { IFarm } from '../../common/data/farms';
-import { useAppSelector } from '../../app/store.app';
+import { useAppDispatch, useAppSelector } from '../../app/store.app';
+import { useEffect } from 'react';
+import { fetchFarms } from '../farm/farm.slice';
 
 export const ChartColors = [
   '#808080',
@@ -21,7 +23,13 @@ export const ChartColors = [
 ]
 
 const DashboardFeature = () => {
+  const dispatch = useAppDispatch();
   const { list } = useAppSelector((state) => state.farms);
+
+
+  useEffect(() => {
+    dispatch(fetchFarms());
+  }, []);
 
   return (
     <div>
