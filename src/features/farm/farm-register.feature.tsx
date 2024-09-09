@@ -67,43 +67,6 @@ const isValidCNPJ = (cnpj: string) => {
   return true;
 };
 
-const validateFields = (values: Partial<IFarm>) => {
-  const errors: Partial<IFarm> = {};
-
-  const totalArea = Number(values.totalArea);
-  const agriculturalArea = Number(values.agriculturalArea);
-  const vegetationArea = Number(values.vegetationArea);
-
-  // Validação para garantir que os campos não estão vazios
-  if (!values.totalArea) {
-    errors.totalArea = 'Campo obrigatório';
-  } else if (isNaN(totalArea)) {
-    errors.totalArea = 'A área total deve ser um número válido';
-  }
-
-  if (!values.agriculturalArea) {
-    errors.agriculturalArea = 'Campo obrigatório';
-  } else if (isNaN(agriculturalArea)) {
-    errors.agriculturalArea = 'A área agricultável deve ser um número válido';
-  }
-
-  if (!values.vegetationArea) {
-    errors.vegetationArea = 'Campo obrigatório';
-  } else if (isNaN(vegetationArea)) {
-    errors.vegetationArea = 'A área de vegetação deve ser um número válido';
-  }
-
-  // Validação para garantir que a soma das áreas não exceda a área total
-  if (!errors.agriculturalArea && !errors.vegetationArea && !errors.totalArea) {
-    if (agriculturalArea + vegetationArea > totalArea) {
-      errors.agriculturalArea = 'A soma da área agricultável e de vegetação não pode ser maior que a área total';
-      errors.vegetationArea = 'A soma da área agricultável e de vegetação não pode ser maior que a área total';
-    }
-  }
-
-  return errors;
-};
-
 interface FarmRegisterFeatureProps {
   farm?: IFarm
 }
