@@ -54,9 +54,9 @@ export default function Input({ label, errors, name, ...props }: InputProps) {
 export function InputMaskComponent({ label, errors, name, ...props }: InputProps) {
   const [field, helpers]: any = useField(name);
 
-  function defineMask(value: string) {
-    return value && value.length <= 14 ? "___.___.___-__" : "__.___.___/____-__"
-  }
+  const modify = (input: string) => {
+    return { mask: input.length > 11 ? "__.___.___/____-__" : undefined };
+  };
 
   return (
     <div className="w-full">
@@ -71,7 +71,8 @@ export function InputMaskComponent({ label, errors, name, ...props }: InputProps
         }}
         onBlur={field.onBlur}
         value={field.value}
-        mask={defineMask(field.value)}
+        mask={"___.___.___-___"}
+        modify={modify}
         replacement={{ _: /\d/ }}
         className={`w-full px-3 py-2 border ${errors[name] ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500`}
       />
